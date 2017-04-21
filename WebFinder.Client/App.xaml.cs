@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using static WebFinder.EventLogger;
 
 namespace WebFinder
 {
@@ -16,6 +17,10 @@ namespace WebFinder
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            new UI.Splash().Show();
+
+            Log("El programa ha iniciado correctamente.");
         }
     }
 }
