@@ -13,7 +13,7 @@ namespace WebFinder
         /// </summary>
         internal static string DataDir {
             get {
-                string dir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\TextFinder";
+                string dir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\WebFinder";
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 return dir;

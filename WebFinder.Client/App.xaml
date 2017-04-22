@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WFResources;component/Styles.xaml"/>
                 <ResourceDictionary Source="/WFResources;component/Vectors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

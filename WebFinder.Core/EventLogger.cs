@@ -14,7 +14,7 @@ namespace WebFinder
         /// Registra un evento en consola y lo almacena en un archivo de registros de la sesión.
         /// </summary>
         /// <param name="msg">Registro de texto.</param>
-        public static void Log(string msg) => Log(msg, "TextFinder");
+        public static void Log(string msg) => Log(msg, "WebFinder");
 
         /// <summary>
         /// Registra un evento en consola y lo almacena en un archivo de registros de la sesión.
@@ -44,7 +44,6 @@ namespace WebFinder
             if (logFile == null) {
                 var now = DateTime.Now;
                 logFile = $@"{Constants.LogsDir}\{now.Year}{addZero(now.Month)}{addZero(now.Day)}_{addZero(now.Hour)}{addZero(now.Minute)}{addZero(now.Second)}.log";
-                //logFile = filename;
 
                 using (File.Create(logFile)) {
                     ;
