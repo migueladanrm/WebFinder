@@ -1,6 +1,6 @@
-﻿using System;
+﻿using System.IO;
 using System.Net;
-using System.IO;
+using System.Threading.Tasks;
 using static WebFinder.EventLogger;
 
 namespace WebFinder
@@ -14,7 +14,7 @@ namespace WebFinder
         /// Ejecuta una descarga desde un enlace proporcionado.
         /// </summary>
         /// <param name="url">Enlace.</param>
-        public static string DownloadPage(string url)
+        public static async Task<string> DownloadPage(string url)
         {
             Log($"Inicializando descarga desde: '{url}'.");
 
@@ -23,7 +23,7 @@ namespace WebFinder
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.AutomaticDecompression = DecompressionMethods.GZip;
 
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (var response = await request.GetResponseAsync())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream)) {
                 html = reader.ReadToEnd();
