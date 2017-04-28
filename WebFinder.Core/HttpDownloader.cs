@@ -30,7 +30,7 @@ namespace WebFinder
             }
 
             Log("Se ha completado la descarga.");
-
+            
             return html;
         }
     }
