@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using static WebFinder.EventLogger;
 
 namespace WebFinder.UI
 {
@@ -22,6 +23,25 @@ namespace WebFinder.UI
         public Home()
         {
             InitializeComponent();
+
+            searchBox.OnSearchRequest += (sender, e) => {
+                Log("No se ha implementado.");
+            };
         }
+
+        private void btnManageLibrary_Click(object sender, RoutedEventArgs e)
+        {
+            var ml = new ManageLibrary() {
+                Owner = this
+            };
+            ml.ShowDialog();
+        }
+
+
+        //private string[] GetSearchTerms()
+        //{
+        //    string text = tbxSearchBox.Text;
+        //    return text.Split(';');
+        //}
     }
 }

@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="WebFinder.UI.Controls.SearchBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:local="clr-namespace:WebFinder.UI.Controls"
+             mc:Ignorable="d" 
+             MinHeight="40"
+             d:DesignHeight="50" d:DesignWidth="300" UseLayoutRounding="True">
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="60"/>
+            </Grid.ColumnDefinitions>
+            <xctk:WatermarkTextBox Style="{StaticResource SearchBox}" Watermark="Buscar..."/>
+            <Button Grid.Column="1" Style="{DynamicResource SearchBox.SearchButton}">
+                <Button.Content>
+                    <Path Data="{StaticResource vector.magnify}" Margin="10" Fill="White" RenderTransformOrigin="0.5,0.5" Stretch="Uniform">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                <SkewTransform AngleY="0" AngleX="0"/>
+                                <RotateTransform Angle="0"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Border>
+</UserControl>
