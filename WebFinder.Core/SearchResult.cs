@@ -17,6 +17,14 @@ namespace WebFinder
 
         }
 
+        public SearchResult(string url, string pageTitle, int matches, string searchTerm)
+        {
+            this.url = url;
+            this.pageTitle = pageTitle;
+            this.matches = matches;
+            this.searchTerm = searchTerm;
+        }
+
         public string SearchTerm => searchTerm;
         public string PageTitle => PageTitle;
         public string URL => url;

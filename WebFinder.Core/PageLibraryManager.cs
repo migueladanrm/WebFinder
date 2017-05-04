@@ -11,6 +11,20 @@ namespace WebFinder
 {
     public static class PageLibraryManager
     {
+        private static string libraryFile = null;
+
+        public static void SetLibraryFile(string path)
+        {
+            libraryFile = path;
+        }
+
+        public static IEnumerable<string> GetLinks()
+        {
+            if (libraryFile != null && File.Exists(libraryFile))
+                return File.ReadLines(libraryFile);
+            return null;
+        }
+
         public static bool ExistsDownloadedPage(string url)
         {
             return false;
@@ -26,21 +40,21 @@ namespace WebFinder
 
         }
 
-        public static List<string> GetLinks()
-        {
-            var links = new List<string>();
+        //public static List<string> GetLinks()
+        //{
+        //    var links = new List<string>();
 
-            using (var db = GetDatabaseConnection()) {
-                db.Open();
-                using (var cmd = new SQLiteCommand("SELECT * FROM PageLibrary;", db))
-                using (SQLiteDataReader reader = cmd.ExecuteReader()) {
-                    while (reader.Read())
-                        links.Add((string)reader["Link"]);
-                }
-            }
+        //    using (var db = GetDatabaseConnection()) {
+        //        db.Open();
+        //        using (var cmd = new SQLiteCommand("SELECT * FROM PageLibrary;", db))
+        //        using (SQLiteDataReader reader = cmd.ExecuteReader()) {
+        //            while (reader.Read())
+        //                links.Add((string)reader["Link"]);
+        //        }
+        //    }
 
-            return links;
-        }
+        //    return links;
+        //}
 
         public static void Import(JArray lib)
         {

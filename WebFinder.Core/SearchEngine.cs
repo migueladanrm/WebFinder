@@ -19,7 +19,7 @@ namespace WebFinder
                     matches++;
             }
 
-            return null;
+            return new SearchResult();
         }
 
         //public List<SearchResult> Search(string searchTerm, List<string> pages)
