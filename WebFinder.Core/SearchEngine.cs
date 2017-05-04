@@ -11,6 +11,30 @@ namespace WebFinder
     public static class SearchEngine
     {
 
+        public static SearchResult Search(IEnumerable<string> pagePayload, string searchTerm)
+        {
+            int matches = 0;
+            foreach(string line in pagePayload) {
+                if (line.Contains(searchTerm))
+                    matches++;
+            }
+
+            return null;
+        }
+
+        //public List<SearchResult> Search(string searchTerm, List<string> pages)
+        //{
+        //    Parallel.ForEach(pages, (link) => {
+
+        //    });
+        //}
+
+        public static IEnumerable<string> GetPages(IEnumerable<string> pages)
+        {
+            foreach (string page in pages)
+                yield return HttpDownloader.DownloadPage(page);
+        }
+
         public static async Task<List<string>> getUtilPages(List<string> searchTerms) {
 
             var utilPages = new List<string>();
@@ -19,9 +43,9 @@ namespace WebFinder
                 if (searchTerms.Count == 1) {
                     foreach (string link in PageLibraryManager.GetLinks())
                     {
-                        var page = await HttpDownloader.DownloadPage(link);
-                        if(ifUtil(page.Split('\n').ToList(), searchTerms[0]) > 0)
-                            utilPages.Add();
+                        var page = await HttpDownloader.DownloadPageAsync(link);
+                        //if(ifUtil(page.Split('\n').ToList(), searchTerms[0]) > 0);
+                        //utilPages.Add();
                     }
 
                 }

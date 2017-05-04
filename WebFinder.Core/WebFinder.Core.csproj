@@ -69,7 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
-    <Compile Include="DataManager.cs" />
+    <Compile Include="DatabaseManager.cs" />
+    <Compile Include="EngineMode.cs" />
     <Compile Include="EventLogger.cs" />
     <Compile Include="HttpDownloader.cs" />
     <Compile Include="PageLibraryManager.cs" />
@@ -87,6 +88,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SearchEngine.cs" />
+    <Compile Include="SearchRequest.cs" />
+    <Compile Include="SearchResult.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

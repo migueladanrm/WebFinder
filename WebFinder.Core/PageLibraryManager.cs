@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.IO;
 using Newtonsoft.Json.Linq;
-using static WebFinder.DataManager;
+using static WebFinder.DatabaseManager;
 using static WebFinder.EventLogger;
 using System.Collections.Generic;
 
@@ -11,6 +11,21 @@ namespace WebFinder
 {
     public static class PageLibraryManager
     {
+        public static bool ExistsDownloadedPage(string url)
+        {
+            return false;
+        }
+
+        public static string GetPayload(string link)
+        {
+            return null;
+        }
+
+        public static void AddPayload(string link, string payload)
+        {
+
+        }
+
         public static List<string> GetLinks()
         {
             var links = new List<string>();
@@ -35,7 +50,7 @@ namespace WebFinder
                 db.Open();
                 foreach (string link in lib) {
                     using (var cmd = new SQLiteCommand("INSERT INTO PageLibrary (Link) VALUES(@link);", db)) {
-                        cmd.Parameters.Add("@link", DbType.String).Value = link;
+                        cmd.Parameters.Add("@link", DbType.String).Value = link.Replace("http://", null);
                         cmd.ExecuteNonQuery();
                     }
                 }

@@ -11,10 +11,10 @@ namespace WebFinder
     public static class HttpDownloader
     {
         /// <summary>
-        /// Ejecuta una descarga desde un enlace proporcionado.
+        /// Ejecuta una descarga desde un enlace proporcionado de forma asíncrona.
         /// </summary>
         /// <param name="url">Enlace.</param>
-        public static async Task<string> DownloadPage(string url)
+        public static async Task<string> DownloadPageAsync(string url)
         {
             Log($"Inicializando descarga desde: '{url}'.");
 
@@ -31,6 +31,26 @@ namespace WebFinder
 
             Log("Se ha completado la descarga.");
             
+            return html;
+        }
+
+        public static string DownloadPage(string url)
+        {
+            Log($"Inicializando descarga desde: '{url}'.");
+
+            string html = string.Empty;
+
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            using (var response = request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream)) {
+                html = reader.ReadToEnd();
+            }
+
+            Log("Se ha completado la descarga.");
+
             return html;
         }
     }

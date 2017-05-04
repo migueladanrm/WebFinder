@@ -6,7 +6,7 @@ namespace WebFinder
     /// <summary>
     /// Gestor de base de datos local.
     /// </summary>
-    public static class DataManager
+    public static class DatabaseManager
     {
         private static readonly string FILE_PATH = $@"{Constants.DataDir}\LocalDB.db";
         private static readonly string CONNECTION_STRING = $"Data Source={FILE_PATH};Version=3;Pooling=True;";
