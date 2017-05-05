@@ -20,8 +20,16 @@ namespace WebFinder
 
         public static IEnumerable<string> GetLinks()
         {
-            if (libraryFile != null && File.Exists(libraryFile))
-                return File.ReadLines(libraryFile);
+            if (libraryFile != null && File.Exists(libraryFile)) {
+                var json = JArray.Parse(File.ReadAllText(libraryFile));
+                var result = new List<string>();
+
+                foreach (string item in json) {
+                    result.Add(item);
+                }
+
+                return result;
+            }
             return null;
         }
 
