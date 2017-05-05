@@ -14,8 +14,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <xctk:WatermarkTextBox Style="{StaticResource SearchBox}" Watermark="Buscar..."/>
-            <Button Grid.Column="1" Style="{DynamicResource SearchBox.SearchButton}">
+            <xctk:WatermarkTextBox x:Name="tbxSearchContent" Style="{StaticResource SearchBox}" Watermark="Buscar..."/>
+            <Button Click="btnSearch_Click" Grid.Column="1" Style="{DynamicResource SearchBox.SearchButton}">
                 <Button.Content>
                     <Path Data="{StaticResource vector.magnify}" Margin="10" Fill="White" RenderTransformOrigin="0.5,0.5" Stretch="Uniform">
                         <Path.RenderTransform>

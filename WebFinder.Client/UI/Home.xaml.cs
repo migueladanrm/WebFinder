@@ -25,7 +25,10 @@ namespace WebFinder.UI
             InitializeComponent();
 
             searchBox.OnSearchRequest += (sender, e) => {
-                Log("No se ha implementado.");
+                //Log("No se ha implementado.");
+
+                foreach (string searchTerm in e.SearchTerms)
+                    Console.WriteLine(searchTerm);
             };
         }
 

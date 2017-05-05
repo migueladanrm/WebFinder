@@ -47,5 +47,11 @@ namespace WebFinder.UI.Controls
             public List<string> SearchTerms { get; private set; }
         }
 
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            string[] search = tbxSearchContent.Text.Split(';');
+
+            OnSearchRequest?.Invoke(this, new OnSearchRequestEventHandler(search.ToList()));
+        }
     }
 }

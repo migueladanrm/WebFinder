@@ -17,5 +17,22 @@ namespace WebFinder.Tests
                 WriteLine(page);
             }
         }
+
+        [TestMethod]
+        public void DownloadMultiPages()
+        {
+            foreach(var page in SearchEngine.GetPages(PageLibraryManager.GetLinks())) {
+                WriteLine(page);
+            }
+        }
+
+        [TestMethod]
+        public void TestSearch1()
+        {
+            foreach (var res in SearchEngine.RunSearch(new string[] { "gas", "hidrógeno" })) {
+                WriteLine($"Coincidencias {res.Matches}");
+            }
+        }
+
     }
 }

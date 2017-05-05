@@ -11,7 +11,7 @@ namespace WebFinder
 {
     public static class PageLibraryManager
     {
-        private static string libraryFile = null;
+        private static string libraryFile = @"C:\Users\Miguel\Desktop\library.json";
 
         public static void SetLibraryFile(string path)
         {
