@@ -21,17 +21,6 @@ namespace WebFinder.UI.Controls
     public partial class SearchBox : UserControl
     {
         /// <summary>
-        /// Se produce cuando el usuario solicita la ejecución de una búsqueda.
-        /// </summary>
-        public event EventHandler<OnSearchRequestEventHandler> OnSearchRequest;
-
-        public SearchBox()
-        {
-            InitializeComponent();
-        }
-        
-
-        /// <summary>
         /// Argumentos para eventos de solicitud de búsqueda.
         /// </summary>
         public class OnSearchRequestEventHandler : EventArgs
@@ -47,11 +36,28 @@ namespace WebFinder.UI.Controls
             public List<string> SearchTerms { get; private set; }
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        public SearchBox()
         {
-            string[] search = tbxSearchContent.Text.Split(';');
+            InitializeComponent();
+        }
 
-            OnSearchRequest?.Invoke(this, new OnSearchRequestEventHandler(search.ToList()));
+        /// <summary>
+        /// Se produce cuando el usuario solicita la ejecución de una búsqueda.
+        /// </summary>
+        public event EventHandler<OnSearchRequestEventHandler> OnSearchRequest;
+
+        /// <summary>
+        /// Obtiene los términos de búsqueda introducidos en el campo de texto.
+        /// </summary>
+        /// <returns>Lista de cadenas de texto.</returns>
+        public List<string> GetSearchTerms() => !(string.IsNullOrEmpty(tbxSearchContent.Text) || string.IsNullOrWhiteSpace(tbxSearchContent.Text)) ? tbxSearchContent.Text.Split(';').ToList() : null;
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e) => OnSearchRequest?.Invoke(this, new OnSearchRequestEventHandler(GetSearchTerms()));
+
+        private void tbxSearchContent_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key.Equals(Key.Enter))
+                OnSearchRequest?.Invoke(this, new OnSearchRequestEventHandler(GetSearchTerms()));
         }
     }
 }

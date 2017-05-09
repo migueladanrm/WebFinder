@@ -7,14 +7,14 @@
              xmlns:local="clr-namespace:WebFinder.UI.Controls"
              mc:Ignorable="d" 
              MinHeight="40"
-             d:DesignHeight="50" d:DesignWidth="300" UseLayoutRounding="True">
+             d:DesignHeight="40" d:DesignWidth="300" UseLayoutRounding="True">
     <Border>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <xctk:WatermarkTextBox x:Name="tbxSearchContent" Style="{StaticResource SearchBox}" Watermark="Buscar..."/>
+            <xctk:WatermarkTextBox x:Name="tbxSearchContent" KeyDown="tbxSearchContent_KeyDown" Style="{StaticResource SearchBox}" Watermark="Buscar..."/>
             <Button Click="btnSearch_Click" Grid.Column="1" Style="{DynamicResource SearchBox.SearchButton}">
                 <Button.Content>
                     <Path Data="{StaticResource vector.magnify}" Margin="10" Fill="White" RenderTransformOrigin="0.5,0.5" Stretch="Uniform">

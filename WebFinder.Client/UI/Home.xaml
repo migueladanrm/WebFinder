@@ -7,20 +7,89 @@
         xmlns:controls="clr-namespace:WebFinder.UI.Controls"
         xmlns:local="clr-namespace:WebFinder.UI"
         mc:Ignorable="d"
-        Title="WebFinder" Height="450" Width="800" UseLayoutRounding="True" WindowStartupLocation="CenterScreen">
+        Title="WebFinder" MinHeight="450" MinWidth="700" Height="450" Width="800" UseLayoutRounding="True" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Storyboard x:Key="anim.messageBar.show">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="messageBar">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseInOut" Amplitude="0.5"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="40">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseInOut" Amplitude="0.5"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="anim.messageBar.hide">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="messageBar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <BackEase EasingMode="EaseInOut" Amplitude="0.5"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <!--<BeginStoryboard Storyboard="{StaticResource anim.messageBar.show}"/>
+            <BeginStoryboard Storyboard="{StaticResource anim.messageBar.hide}"/>-->
+        </EventTrigger>
+    </Window.Triggers>
 
     <Grid x:Name="layoutRoot">
-        <Grid VerticalAlignment="Top" Height="50">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--<Grid VerticalAlignment="Top" Height="50">
             <Button Click="btnManageLibrary_Click" Content="Gestionar biblioteca" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="10,4" Margin="0,0,10,0"/>
-        </Grid>
-        <controls:SearchBox x:Name="searchBox" HorizontalAlignment="Center" VerticalAlignment="Center" Height="45" Width="370"/>
+        </Grid>-->
 
-        <!--<Border BorderBrush="#FFC8C8C8" BorderThickness="2" CornerRadius="5" HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Width="500" >
-            <StackPanel>
-                <Path x:Name="logo" Data="{StaticResource vector.websearch}" Fill="Gray" Height="60" HorizontalAlignment="Center" Stretch="Uniform" />
-                <xctk:WatermarkTextBox x:Name="tbxSearchBox" Margin="0,10,0,0" Watermark="Buscar..." Style="{DynamicResource SearchBox}" />
-                --><!--<TextBox Width="400" Margin="0,10,0,0"/>--><!--
-            </StackPanel>
-        </Border>-->
+            <Border x:Name="messageBar" Background="#FFDC713F" Height="40" RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Data="{StaticResource vector.alert}" Fill="WhiteSmoke" Margin="0,0,5,0" Stretch="Uniform" Height="15"/>
+                        <TextBlock Text="Debe introducir al menos un término" FontFamily="Segoe UI Semibold" FontSize="14" Foreground="White" />
+                    </StackPanel>
+                </Label>
+            </Border>
+            <Grid Grid.Row="1" Margin="0,10,0,5">
+                <controls:SearchBox x:Name="searchBox" VerticalAlignment="Top" Height="40" Margin="50,0" />
+                <Button Click="btnManageLibrary_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Background="{x:Null}" BorderThickness="0">
+                    <Button.Content>
+                        <Path Data="{StaticResource vector.menu}" Stretch="Uniform" Fill="Gray" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <Grid Grid.Row="2">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="stkResults">
+
+                    </StackPanel>
+                </ScrollViewer>
+                <Label x:Name="hintSearch" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label.Content>
+                        <StackPanel>
+                            <Path Data="{StaticResource vector.loop}" Fill="#FFC8C8C8" Height="80" HorizontalAlignment="Center" Stretch="Uniform" Width="80"/>
+                            <TextBlock Text="Introdúzca uno o más términos para iniciar la búsqueda" FontFamily="Segoe UI Semilight" FontSize="22" Foreground="Gray"/>
+                        </StackPanel>
+                    </Label.Content>
+                </Label>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

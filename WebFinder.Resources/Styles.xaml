@@ -14,7 +14,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontSize" Value="17"/>
         <Setter Property="KeepWatermarkOnGotFocus" Value="True"/>
         <Setter Property="WatermarkTemplate">
             <Setter.Value>

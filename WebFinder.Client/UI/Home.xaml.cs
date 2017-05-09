@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static WebFinder.EventLogger;
+using System.Windows.Media.Animation;
+using System.Threading;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace WebFinder.UI
 {
@@ -25,11 +29,43 @@ namespace WebFinder.UI
             InitializeComponent();
 
             searchBox.OnSearchRequest += (sender, e) => {
-                //Log("No se ha implementado.");
-
-                foreach (string searchTerm in e.SearchTerms)
-                    Console.WriteLine(searchTerm);
+                if (e.SearchTerms != null)
+                    PrepareSearch(e.SearchTerms);
+                else
+                    BeginStoryboard((Storyboard)FindResource("anim.messageBar.show"));
             };
+
+            // animación de ocultar después de 1s.
+            ((Storyboard)FindResource("anim.messageBar.show")).Completed += (sender, e) => {
+                DispatcherTimer tmr = new DispatcherTimer() { Interval = new TimeSpan(0, 0, 1) };
+                tmr.Tick += (sender2, e2) => {
+                    BeginStoryboard((Storyboard)FindResource("anim.messageBar.hide"));
+                    tmr.Stop();
+                };
+                tmr.Start();
+            };
+
+            searchBox.Focus();
+
+            messageBar.Height = 0;
+        }
+
+        private async void PrepareSearch(IEnumerable<string> searchTerms)
+        {
+            Log("Obteniendo contenido...");
+
+            var pages = await PageDownloader.DownloadPagesAsync(PageLibraryManager.GetLinks());
+
+            Log("Obtención de contenido finalizada.");
+
+            foreach(var page in pages) {
+                foreach(string line in page) {
+                    if (line.Contains("<title>")) {
+                        Console.WriteLine(line);
+                        break;
+                    }
+                }
+            }
         }
 
         private void btnManageLibrary_Click(object sender, RoutedEventArgs e)
@@ -40,11 +76,5 @@ namespace WebFinder.UI
             ml.ShowDialog();
         }
 
-
-        //private string[] GetSearchTerms()
-        //{
-        //    string text = tbxSearchBox.Text;
-        //    return text.Split(';');
-        //}
     }
 }

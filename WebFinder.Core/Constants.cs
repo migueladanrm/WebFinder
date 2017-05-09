@@ -6,12 +6,12 @@ namespace WebFinder
     /// <summary>
     /// Constantes de uso genérico del programa.
     /// </summary>
-    internal static class Constants
+    public static class Constants
     {
         /// <summary>
         /// Directorio de datos principal.
         /// </summary>
-        internal static string DataDir {
+        public static string DataDir {
             get {
                 string dir = $@"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\WebFinder";
                 if (!Directory.Exists(dir))

@@ -29,9 +29,9 @@ namespace WebFinder.Tests
         [TestMethod]
         public void TestSearch1()
         {
-            foreach (var res in SearchEngine.RunSearch(new string[] { "gas", "hidrógeno" })) {
-                WriteLine($"Coincidencias {res.Matches}");
-            }
+            //foreach (var res in SearchEngine.RunSearch(new string[] { "gas", "hidrógeno" })) {
+            //    WriteLine($"Coincidencias {res.Matches}");
+            //}
         }
 
     }

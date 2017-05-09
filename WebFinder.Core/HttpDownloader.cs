@@ -14,7 +14,7 @@ namespace WebFinder
         /// Ejecuta una descarga desde un enlace proporcionado de forma asíncrona.
         /// </summary>
         /// <param name="url">Enlace.</param>
-        public static async Task<string> DownloadPageAsync(string url)
+        public static async Task<string> DownloadAsync(string url)
         {
             Log($"Inicializando descarga desde: '{url}'.");
 
@@ -34,7 +34,7 @@ namespace WebFinder
             return html;
         }
 
-        public static string DownloadPage(string url)
+        public static string Download(string url)
         {
             Log($"Inicializando descarga desde: '{url}'.");
 

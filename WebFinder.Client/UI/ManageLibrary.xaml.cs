@@ -24,6 +24,8 @@ namespace WebFinder.UI
         public ManageLibrary()
         {
             InitializeComponent();
+
+            tbxLibraryPath.Text = $@"{Constants.DataDir}\library.json";
         }
 
         private void btnSearchLibrary_Click(object sender, RoutedEventArgs e)
