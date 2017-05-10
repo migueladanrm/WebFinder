@@ -10,6 +10,36 @@ namespace WebFinder
     /// </summary>
     public static class SearchEngine
     {
+        public static IEnumerable<SearchResult> RunSearch(IEnumerable<IEnumerable<string>> pages, IEnumerable<string> searchTerms, bool parallel)
+        {
+            var results = new List<SearchResult>();
+
+            foreach (var page in pages) {
+                foreach (string term in searchTerms) {
+                    var result = Search(page, term);
+
+                    results.Add(result);
+                }
+            }
+
+            return results;
+        }
+
+        private static SearchResult Search(IEnumerable<string> page, string searchTerm)
+        {
+            var target = HtmlUtils.GetPageTarget(page.ToList());
+
+            int matches = 0;
+
+            foreach(string line in target.PageBody) {
+                if (line.Contains(searchTerm))
+                    matches++;
+            }
+
+            return new SearchResult(null, target.PageTitle, matches, searchTerm);
+        }
+
+
         //public static IEnumerable<IEnumerable<(string Title, string URL, int Matches, int SearchTerm)>> RunSearch()
         //{
             
@@ -32,16 +62,16 @@ namespace WebFinder
         //    return results;
         //}
 
-        public static SearchResult Search(IEnumerable<string> pagePayload, string searchTerm)
-        {
-            int matches = 0;
-            foreach (string line in pagePayload) {
-                if (line.Contains(searchTerm))
-                    matches++;
-            }
+        //public static SearchResult Search(IEnumerable<string> pagePayload, string searchTerm)
+        //{
+        //    int matches = 0;
+        //    foreach (string line in pagePayload) {
+        //        if (line.Contains(searchTerm))
+        //            matches++;
+        //    }
 
-            return new SearchResult(null, null, matches, searchTerm);
-        }
+        //    return new SearchResult(null, null, matches, searchTerm);
+        //}
 
         //public List<SearchResult> Search(string searchTerm, List<string> pages)
         //{

@@ -29,5 +29,10 @@ namespace WebFinder
         public string PageTitle => PageTitle;
         public string URL => url;
         public int Matches => matches;
+
+        public override string ToString()
+        {
+            return $"{pageTitle} | {matches} | {searchTerm} | {url}";
+        }
     }
 }

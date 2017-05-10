@@ -75,6 +75,7 @@
     <Compile Include="DatabaseManager.cs" />
     <Compile Include="EngineMode.cs" />
     <Compile Include="EventLogger.cs" />
+    <Compile Include="HtmlUtils.cs" />
     <Compile Include="HttpDownloader.cs" />
     <Compile Include="PageDownloader.cs" />
     <Compile Include="PageLibraryManager.cs" />

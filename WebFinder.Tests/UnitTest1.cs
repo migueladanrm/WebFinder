@@ -11,19 +11,19 @@ namespace WebFinder.Tests
         [TestMethod]
         public void DownloadPage()
         {
-            var result = SearchEngine.GetPages(new List<string> { "http://es.wikipedia.org/wiki/Tierra" });
+            //var result = SearchEngine.GetPages(new List<string> { "http://es.wikipedia.org/wiki/Tierra" });
 
-            foreach (string page in result) {
-                WriteLine(page);
-            }
+            //foreach (string page in result) {
+            //    WriteLine(page);
+            //}
         }
 
         [TestMethod]
         public void DownloadMultiPages()
         {
-            foreach(var page in SearchEngine.GetPages(PageLibraryManager.GetLinks())) {
-                WriteLine(page);
-            }
+            //foreach(var page in SearchEngine.GetPages(PageLibraryManager.GetLinks())) {
+            //    WriteLine(page);
+            //}
         }
 
         [TestMethod]

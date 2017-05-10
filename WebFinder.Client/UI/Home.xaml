@@ -32,9 +32,15 @@
                 </EasingDoubleKeyFrame>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="anim.hint.rotateIcon">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="lblHintsIcon">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="-360"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <!--<BeginStoryboard Storyboard="{StaticResource anim.hint.rotateIcon}"/>-->
             <!--<BeginStoryboard Storyboard="{StaticResource anim.messageBar.show}"/>
             <BeginStoryboard Storyboard="{StaticResource anim.messageBar.hide}"/>-->
         </EventTrigger>
@@ -81,11 +87,20 @@
 
                     </StackPanel>
                 </ScrollViewer>
-                <Label x:Name="hintSearch" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Label x:Name="lblHints" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label.Content>
                         <StackPanel>
-                            <Path Data="{StaticResource vector.loop}" Fill="#FFC8C8C8" Height="80" HorizontalAlignment="Center" Stretch="Uniform" Width="80"/>
-                            <TextBlock Text="Introdúzca uno o más términos para iniciar la búsqueda" FontFamily="Segoe UI Semilight" FontSize="22" Foreground="Gray"/>
+                            <Path x:Name="lblHintsIcon" Data="{StaticResource vector.loop}" Fill="#FFC8C8C8" Height="80" HorizontalAlignment="Center" Stretch="Uniform" Width="80" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                            <TextBlock x:Name="lblHintsText" Text="{StaticResource lang.home.hint.default}" FontFamily="Segoe UI Semilight" FontSize="22" Foreground="Gray" Margin="0,10,0,0"/>
                         </StackPanel>
                     </Label.Content>
                 </Label>

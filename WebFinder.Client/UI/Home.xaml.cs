@@ -16,6 +16,8 @@ using System.Windows.Media.Animation;
 using System.Threading;
 using System.Timers;
 using System.Windows.Threading;
+using static System.Console;
+using System.Diagnostics;
 
 namespace WebFinder.UI
 {
@@ -24,9 +26,15 @@ namespace WebFinder.UI
     /// </summary>
     public partial class Home : Window
     {
+        private const int HINT_DEFAULT = 0x1;
+        private const int HINT_DOWNLOADING_PAGES = 0x2;
+        private const int HINT_HIDE = 0x3;
+
         public Home()
         {
             InitializeComponent();
+
+            SetupHint(HINT_DEFAULT);
 
             searchBox.OnSearchRequest += (sender, e) => {
                 if (e.SearchTerms != null)
@@ -52,19 +60,35 @@ namespace WebFinder.UI
 
         private async void PrepareSearch(IEnumerable<string> searchTerms)
         {
+            SetupHint(HINT_DOWNLOADING_PAGES);
+
             Log("Obteniendo contenido...");
+
+            var sw = Stopwatch.StartNew();
 
             var pages = await PageDownloader.DownloadPagesAsync(PageLibraryManager.GetLinks());
 
-            Log("Obtención de contenido finalizada.");
+            Log($"Obtención de contenido finalizada en {sw.Elapsed.TotalMilliseconds} ms.");
+            sw.Stop();
 
-            foreach(var page in pages) {
-                foreach(string line in page) {
-                    if (line.Contains("<title>")) {
-                        Console.WriteLine(line);
-                        break;
-                    }
-                }
+            //foreach (var page in pages) {
+            //    foreach (string line in page) {
+            //        if (line.Contains("<title>")) {
+            //            WriteLine(line);
+            //            break;
+            //        }
+            //    }
+            //}
+
+            SetupHint(HINT_HIDE);
+
+
+
+
+            var results = SearchEngine.RunSearch(pages, searchTerms, false);
+
+            foreach(var result in results) {
+                WriteLine(result.ToString());
             }
         }
 
@@ -74,6 +98,45 @@ namespace WebFinder.UI
                 Owner = this
             };
             ml.ShowDialog();
+        }
+
+        private void SetupHint(int mode)
+        {
+            string icon = string.Empty;
+            string text = string.Empty;
+
+            switch (mode) {
+                default:
+                    return;
+                case HINT_DEFAULT:
+                    icon = "vector.magnify";
+                    text = "lang.home.hint.default";
+                    break;
+                case HINT_DOWNLOADING_PAGES:
+                    icon = "vector.loop";
+                    text = "lang.home.hint.downloadingData";
+                    break;
+                case HINT_HIDE:
+                    lblHints.Visibility = Visibility.Hidden;
+                    return;
+            }
+
+            lblHintsIcon.Data = (Geometry)FindResource(icon);
+            lblHintsText.Text = (string)FindResource(text);
+
+            /*
+            if (mode == HINT_DOWNLOADING_PAGES) {
+                var sb = (Storyboard)FindResource("anim.hint.rotateIcon");
+                sb.Completed += (sender, e) => {
+                    BeginStoryboard(sb);
+                };
+                BeginStoryboard(sb);
+            } else {
+                ((Storyboard)FindResource("anim.hint.rotateIcon")).Stop();
+                lblHintsIcon.RenderTransform = new RotateTransform(0);
+            }
+            */
+
         }
 
     }
