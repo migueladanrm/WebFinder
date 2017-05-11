@@ -84,7 +84,7 @@
             <Grid Grid.Row="2">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="stkResults">
-
+                        
                     </StackPanel>
                 </ScrollViewer>
                 <Label x:Name="lblHints" HorizontalAlignment="Center" VerticalAlignment="Center">

@@ -18,6 +18,7 @@ using System.Timers;
 using System.Windows.Threading;
 using static System.Console;
 using System.Diagnostics;
+using WebFinder.UI.Controls;
 
 namespace WebFinder.UI
 {
@@ -85,11 +86,13 @@ namespace WebFinder.UI
 
 
 
-            var results = SearchEngine.RunSearch(pages, searchTerms, false);
+            var results = SearchEngine.RunSearch(pages, searchTerms, false).ToList();
 
-            foreach(var result in results) {
-                WriteLine(result.ToString());
-            }
+            LoadResults(results);
+
+            //foreach(var result in results) {
+            //    WriteLine(result.ToString());
+            //}
         }
 
         private void btnManageLibrary_Click(object sender, RoutedEventArgs e)
@@ -137,6 +140,18 @@ namespace WebFinder.UI
             }
             */
 
+        }
+
+        private void LoadResults(List<SearchResult> results)
+        {
+            foreach (var result in results) {
+                var item = new SearchResultItem() {
+                    PageTitle = result.PageTitle,
+                    PageUrl = result.URL,
+                    MatchesFound = result.Matches
+                };
+                stkResults.Children.Add(item);
+            }
         }
 
     }

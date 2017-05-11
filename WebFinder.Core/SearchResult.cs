@@ -26,7 +26,7 @@ namespace WebFinder
         }
 
         public string SearchTerm => searchTerm;
-        public string PageTitle => PageTitle;
+        public string PageTitle => pageTitle;
         public string URL => url;
         public int Matches => matches;
 
