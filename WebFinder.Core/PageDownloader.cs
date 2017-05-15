@@ -17,6 +17,10 @@ namespace WebFinder
         {
             var pages = new List<IEnumerable<string>>();
 
+            //Parallel.ForEach(urls, async url => {
+            //    var tmp = await DownloadPageAsync(url);
+            //    pages.Add(tmp);
+            //});
             foreach (string url in urls) {
                 var tmp = await DownloadPageAsync(url);
                 pages.Add(tmp);

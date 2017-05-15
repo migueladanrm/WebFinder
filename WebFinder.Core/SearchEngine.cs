@@ -14,11 +14,21 @@ namespace WebFinder
         {
             var results = new List<SearchResult>();
 
-            foreach (var page in pages) {
-                foreach (string term in searchTerms) {
-                    var result = Search(page, term);
 
-                    results.Add(result);
+            if (parallel) {
+                Parallel.ForEach(pages, page => {
+                    Parallel.ForEach(searchTerms, term => {
+                        var result = SearchParallel(page, term);
+                        results.Add(result);
+                    });
+                });
+            } else {
+                foreach (var page in pages) {
+                    foreach (string term in searchTerms) {
+                        var result = Search(page, term);
+
+                        results.Add(result);
+                    }
                 }
             }
 
@@ -39,10 +49,23 @@ namespace WebFinder
             return new SearchResult(null, target.PageTitle, matches, searchTerm);
         }
 
+        private static SearchResult SearchParallel(IEnumerable<string> page, string searchTerm)
+        {
+            var target = HtmlUtils.GetPageTarget(page.ToList());
+
+            int matches = 0;
+
+            Parallel.ForEach(page, line => {
+                if (line.Contains(searchTerm))
+                    matches++;
+            });
+
+            return new SearchResult(null, target.PageTitle, matches, searchTerm);
+        }
 
         //public static IEnumerable<IEnumerable<(string Title, string URL, int Matches, int SearchTerm)>> RunSearch()
         //{
-            
+
         //}
 
 
@@ -80,17 +103,17 @@ namespace WebFinder
         //    });
         //}
 
-//        public static IEnumerable<IEnumerable<string>> GetPages(IEnumerable<string> pages)
-//        {
-//#if prueba
-//            foreach (string page in pages)
-//                yield return HttpDownloader.DownloadPage(page);
-//#endif
-//            var tmp = new List<string>();
-//            foreach (string page in pages)
-//                tmp.Add(HttpDownloader.Download(page));
+        //        public static IEnumerable<IEnumerable<string>> GetPages(IEnumerable<string> pages)
+        //        {
+        //#if prueba
+        //            foreach (string page in pages)
+        //                yield return HttpDownloader.DownloadPage(page);
+        //#endif
+        //            var tmp = new List<string>();
+        //            foreach (string page in pages)
+        //                tmp.Add(HttpDownloader.Download(page));
 
-//            return tmp;
-//        }
+        //            return tmp;
+        //        }
     }
 }

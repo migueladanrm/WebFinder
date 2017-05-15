@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using static WebFinder.EventLogger;
-
+using static System.Console;
 namespace WebFinder
 {
     /// <summary>

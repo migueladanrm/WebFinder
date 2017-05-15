@@ -69,7 +69,7 @@
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Path Data="{StaticResource vector.alert}" Fill="WhiteSmoke" Margin="0,0,5,0" Stretch="Uniform" Height="15"/>
-                        <TextBlock Text="Debe introducir al menos un término" FontFamily="Segoe UI Semibold" FontSize="14" Foreground="White" />
+                        <TextBlock Text="{DynamicResource lang.home.withoutSearchTerms}" FontFamily="Segoe UI Semibold" FontSize="14" Foreground="White" />
                     </StackPanel>
                 </Label>
             </Border>

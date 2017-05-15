@@ -85,8 +85,11 @@ namespace WebFinder.UI
 
 
 
+            sw = Stopwatch.StartNew();
 
-            var results = SearchEngine.RunSearch(pages, searchTerms, false).ToList();
+            var results = SearchEngine.RunSearch(pages, searchTerms, true).ToList();
+
+            Log($"Búsqueda completada en {sw.Elapsed.TotalMilliseconds} ms.");
 
             LoadResults(results);
 

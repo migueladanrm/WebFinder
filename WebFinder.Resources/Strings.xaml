@@ -4,6 +4,7 @@
 
     <system:String x:Key="lang.home.hint.downloadingData">Obteniendo páginas...</system:String>
     <system:String x:Key="lang.home.hint.default">Introdúzca uno o más términos para iniciar la búsqueda</system:String>
-
+    <system:String x:Key="lang.home.withoutSearchTerms">Debe introducir al menos un término de búsqueda</system:String>
+    
     <system:String x:Key="lang.searchResultItem.matches">{0} coincidencias</system:String>
 </ResourceDictionary>
