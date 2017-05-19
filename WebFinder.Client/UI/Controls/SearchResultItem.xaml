@@ -6,15 +6,16 @@
              xmlns:local="clr-namespace:WebFinder.UI.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="300" MinHeight="70">
-    <Border x:Name="layoutRoot" Background="WhiteSmoke" BorderBrush="#FFC8C8C8" BorderThickness="0,0,0,1">
+    <Border x:Name="layoutRoot" Background="WhiteSmoke" BorderBrush="#FFC8C8C8" BorderThickness="0,0,0,1" MouseLeftButtonDown="layoutRoot_MouseLeftButtonDown">
         <StackPanel Margin="10,5">
             <StackPanel Orientation="Horizontal">
                 <!--<Image Height="20" Width="20" />-->
                 <Path Data="{StaticResource vector.genericpage}" Height="20" Width="20" Stretch="Uniform" Fill="#FF5497E8"/>
                 <Label x:Name="lblPageTitle" Content="{Binding PageTitle}" FontSize="15" FontFamily="Segoe UI Semibold"/>
             </StackPanel>
-            <TextBlock x:Name="lblPageDomain" FontFamily="Segoe UI Semibold" FontSize="10" Text="www.lipsum.com" Foreground="#FF37A64C"/>
-            <TextBlock x:Name="lblMatches" Text="19 coincidencias"/>
+            <TextBlock x:Name="lblPageDomain" FontFamily="Segoe UI Semibold" FontSize="12" Text="www.lipsum.com" Foreground="#FF37A64C" Margin="0,2"/>
+            
+            <TextBlock x:Name="lblMatches" Text="19 coincidencias" FontFamily="Segoe UI Semibold"/>
         </StackPanel>
     </Border>
 </UserControl>

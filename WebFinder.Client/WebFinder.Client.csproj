@@ -87,17 +87,23 @@
     <Compile Include="UI\Controls\PerformanceViewer.xaml.cs">
       <DependentUpon>PerformanceViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\PerformanceViewerProcessorCore.xaml.cs">
+      <DependentUpon>PerformanceViewerProcessorCore.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\SearchBox.xaml.cs">
       <DependentUpon>SearchBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\SearchResultItem.xaml.cs">
       <DependentUpon>SearchResultItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\SearchStatistics.xaml.cs">
+      <DependentUpon>SearchStatistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UI\ManageLibrary.xaml.cs">
-      <DependentUpon>ManageLibrary.xaml</DependentUpon>
+    <Compile Include="UI\Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
@@ -145,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Controls\PerformanceViewerProcessorCore.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Controls\SearchBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,11 +163,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\Controls\SearchStatistics.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UI\ManageLibrary.xaml">
+    <Page Include="UI\Options.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

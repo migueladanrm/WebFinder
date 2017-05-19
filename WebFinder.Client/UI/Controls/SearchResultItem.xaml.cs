@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace WebFinder.UI.Controls
 {
@@ -40,7 +41,10 @@ namespace WebFinder.UI.Controls
         [Description("URL base de la página web"), Category("Personalizado")]
         public string PageUrl {
             get => (string)GetValue(PageUrlProperty);
-            set => SetValue(PageUrlProperty, value);
+            set {
+                lblPageDomain.Text = value.Replace("http://", null).Replace("https://",null);
+                SetValue(PageUrlProperty, value);
+            }
         }
 
         [Description("Coincidencias encontradas"), Category("Personalizado")]
@@ -52,6 +56,10 @@ namespace WebFinder.UI.Controls
             }
         }
 
-
+        private void layoutRoot_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (PageUrl != null)
+                Process.Start(PageUrl);
+        }
     }
 }

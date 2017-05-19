@@ -1,0 +1,36 @@
+﻿<Window x:Class="WebFinder.UI.Options"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WebFinder.UI"
+        mc:Ignorable="d"
+        Title="Opciones" Height="380" Width="500" UseLayoutRounding="True" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="10" Grid.Row="0">
+            <StackPanel>
+                <CheckBox x:Name="cbxUseParallelism" Content="Utilizar paralelismo" Checked="cbxUseParallelism_Click" Unchecked="cbxUseParallelism_Click"/>
+                <GroupBox Header="Enlaces" Margin="0,5,0,0" Padding="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="tbxLink" Height="24" Grid.Column="0" VerticalAlignment="Center"/>
+                        <Button Click="btnAddLink_Click" Content="Agregar" Grid.Column="1" Margin="5,0,0,0" Padding="10,3" VerticalAlignment="Center"/>
+                    </Grid>
+                </GroupBox>
+            </StackPanel>
+        </Grid>
+        
+        <Border BorderBrush="#FFC8C8C8" BorderThickness="0,1,0,0" Grid.Row="1" Background="WhiteSmoke">
+            <Button Click="btnClose_Click" Content="Cerrar" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="10,3" Margin="0,0,10,0"/>
+        </Border>
+    </Grid>
+</Window>

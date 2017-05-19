@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:WebFinder.UI.Controls"
         xmlns:local="clr-namespace:WebFinder.UI"
         mc:Ignorable="d"
-        Title="WebFinder" MinHeight="450" MinWidth="700" Height="450" Width="800" UseLayoutRounding="True" WindowStartupLocation="CenterScreen">
+        Title="WebFinder" MinHeight="450" MinWidth="850" Height="450" Width="900" UseLayoutRounding="True" WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Storyboard x:Key="anim.messageBar.show">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="messageBar">
@@ -74,37 +74,86 @@
                 </Label>
             </Border>
             <Grid Grid.Row="1" Margin="0,10,0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
                 <controls:SearchBox x:Name="searchBox" VerticalAlignment="Top" Height="40" Margin="50,0" />
                 <Button Click="btnManageLibrary_Click" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Background="{x:Null}" BorderThickness="0">
                     <Button.Content>
                         <Path Data="{StaticResource vector.menu}" Stretch="Uniform" Fill="Gray" />
                     </Button.Content>
                 </Button>
+
+                <StackPanel x:Name="containerTargetSearch" Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0,5">
+                    <Label Content="Término:" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cbxTargetTerm" Width="200" SelectionChanged="cbxTargetTerm_SelectionChanged"/>
+                </StackPanel>
+                <Border x:Name="containerSearchOverview" Grid.Row="2">
+                    <Label x:Name="lblSearchOverview" Content="{DynamicResource lang.searchResultOverview}" HorizontalAlignment="Center" Margin="0,5" FontFamily="Segoe UI Semibold" Foreground="#FF3FAE15" FontSize="14"/>
+                </Border>
             </Grid>
             <Grid Grid.Row="2">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="stkResults">
-                        
-                    </StackPanel>
-                </ScrollViewer>
-                <Label x:Name="lblHints" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label.Content>
-                        <StackPanel>
-                            <Path x:Name="lblHintsIcon" Data="{StaticResource vector.loop}" Fill="#FFC8C8C8" Height="80" HorizontalAlignment="Center" Stretch="Uniform" Width="80" RenderTransformOrigin="0.5,0.5">
-                                <Path.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform/>
-                                    </TransformGroup>
-                                </Path.RenderTransform>
-                            </Path>
-                            <TextBlock x:Name="lblHintsText" Text="{StaticResource lang.home.hint.default}" FontFamily="Segoe UI Semilight" FontSize="22" Foreground="Gray" Margin="0,10,0,0"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" >
+                        <StackPanel x:Name="stkResults">
+
                         </StackPanel>
-                    </Label.Content>
-                </Label>
+                    </ScrollViewer>
+                    <Label x:Name="lblHints" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label.Content>
+                            <StackPanel>
+                                <Path x:Name="lblHintsIcon" Data="{StaticResource vector.loop}" Fill="#FFC8C8C8" Height="80" HorizontalAlignment="Center" Stretch="Uniform" Width="80" RenderTransformOrigin="0.5,0.5">
+                                    <Path.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Path.RenderTransform>
+                                </Path>
+                                <TextBlock x:Name="lblHintsText" Text="{StaticResource lang.home.hint.default}" FontFamily="Segoe UI Semilight" FontSize="22" Foreground="Gray" Margin="0,10,0,0"/>
+                            </StackPanel>
+                        </Label.Content>
+                    </Label>
+                </Grid>
+                <controls:PerformanceViewer Width="300" Grid.Column="1"/>
             </Grid>
         </Grid>
+        
+        <!--<Grid x:Name="screenSecondary">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.3"/>
+            </Grid.Background>
+
+            <Border Height="200" Width="400" Background="WhiteSmoke" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.5" Direction="270" ShadowDepth="3"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Border MouseLeftButtonDown="HideSettingsDialog" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" >
+                        <Path Data="{StaticResource vector.close}" Fill="Gray" Stretch="Uniform"/>
+                    </Border>
+                    
+                    <Label Content="Opciones" HorizontalAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="15" Foreground="Gray"/>
+
+                    <StackPanel Grid.Row="1" Margin="5">
+                        <CheckBox x:Name="cbxUseParallelism" Checked="cbxUseParallelism_CheckedChanged" Content="Utilizar búsqueda paralela."/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Border>
+        </Grid>-->
     </Grid>
 </Window>

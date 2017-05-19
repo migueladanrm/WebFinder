@@ -29,7 +29,7 @@ namespace WebFinder.Tests
         [TestMethod]
         public void TestSearch1()
         {
-            //foreach (var res in SearchEngine.RunSearch(new string[] { "gas", "hidrógeno" })) {
+            //foreach (var res in SearchEngine.RunSearch(PageDownloader.DownloadPagesAsync(,new string[] { "gas", "hidrógeno" })) {
             //    WriteLine($"Coincidencias {res.Matches}");
             //}
         }

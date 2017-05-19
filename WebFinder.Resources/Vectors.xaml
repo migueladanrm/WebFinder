@@ -6,4 +6,5 @@
     <StreamGeometry x:Key="vector.alert">M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z</StreamGeometry>
     <StreamGeometry x:Key="vector.menu">M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z</StreamGeometry>
     <StreamGeometry x:Key="vector.loop">M9,14V21H2V19H5.57C4,17.3 3,15 3,12.5A9.5,9.5 0 0,1 12.5,3A9.5,9.5 0 0,1 22,12.5A9.5,9.5 0 0,1 12.5,22H12V20H12.5A7.5,7.5 0 0,0 20,12.5A7.5,7.5 0 0,0 12.5,5A7.5,7.5 0 0,0 5,12.5C5,14.47 5.76,16.26 7,17.6V14H9Z</StreamGeometry>
+    <StreamGeometry x:Key="vector.close">M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z</StreamGeometry>
 </ResourceDictionary>

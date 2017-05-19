@@ -11,13 +11,14 @@ namespace WebFinder
         private string pageTitle;
         private int matches;
         private string searchTerm;
+        private double searchTime;
 
         public SearchResult()
         {
 
         }
 
-        public SearchResult(string url, string pageTitle, int matches, string searchTerm)
+        public SearchResult(string url, string pageTitle, int matches, string searchTerm, double searchTime)
         {
             this.url = url;
             this.pageTitle = pageTitle;
@@ -29,6 +30,8 @@ namespace WebFinder
         public string PageTitle => pageTitle;
         public string URL => url;
         public int Matches => matches;
+
+        public double SearchTime => searchTime;
 
         public override string ToString()
         {

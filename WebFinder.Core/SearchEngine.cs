@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace WebFinder
 {
@@ -10,11 +9,10 @@ namespace WebFinder
     /// </summary>
     public static class SearchEngine
     {
-        public static IEnumerable<SearchResult> RunSearch(IEnumerable<IEnumerable<string>> pages, IEnumerable<string> searchTerms, bool parallel)
+        public static List<SearchResult> RunSearch(IEnumerable<HtmlPage> pages, IEnumerable<string> searchTerms, bool parallel)
         {
             var results = new List<SearchResult>();
-
-
+            
             if (parallel) {
                 Parallel.ForEach(pages, page => {
                     Parallel.ForEach(searchTerms, term => {
@@ -35,85 +33,36 @@ namespace WebFinder
             return results;
         }
 
-        private static SearchResult Search(IEnumerable<string> page, string searchTerm)
+        private static SearchResult Search(HtmlPage page, string searchTerm)
         {
-            var target = HtmlUtils.GetPageTarget(page.ToList());
-
             int matches = 0;
+            var searchTime = Stopwatch.StartNew();
 
-            foreach(string line in target.PageBody) {
+            foreach(string line in page.HTML) {
                 if (line.Contains(searchTerm))
                     matches++;
             }
 
-            return new SearchResult(null, target.PageTitle, matches, searchTerm);
+            searchTime.Stop();
+
+            return new SearchResult(page.URL, page.Title, matches, searchTerm, searchTime.Elapsed.TotalMilliseconds);
         }
 
-        private static SearchResult SearchParallel(IEnumerable<string> page, string searchTerm)
+        private static SearchResult SearchParallel(HtmlPage page, string searchTerm)
         {
-            var target = HtmlUtils.GetPageTarget(page.ToList());
-
             int matches = 0;
+            var sw = Stopwatch.StartNew();
 
-            Parallel.ForEach(page, line => {
-                if (line.Contains(searchTerm))
-                    matches++;
+            Parallel.ForEach(page.HTML, line => {
+                Parallel.ForEach(line.Split(' '), word => {
+                    if (word.ToLower().Contains(searchTerm) || word.ToLower().Equals(searchTerm.ToLower()))
+                        matches++;
+                });
             });
 
-            return new SearchResult(null, target.PageTitle, matches, searchTerm);
+            sw.Stop();
+
+            return new SearchResult(page.URL, page.Title, matches, searchTerm, sw.Elapsed.TotalMilliseconds);
         }
-
-        //public static IEnumerable<IEnumerable<(string Title, string URL, int Matches, int SearchTerm)>> RunSearch()
-        //{
-
-        //}
-
-
-
-        //public static List<SearchResult> RunSearch(string[] searchTerms)
-        //{
-        //    var results = new List<SearchResult>();
-
-        //    var pages = GetPages(PageLibraryManager.GetLinks());
-
-        //    for (int i = 0; i < searchTerms.Length; i++) {
-        //        foreach(var page in pages) {
-        //            results.Add(Search(page.Split('\n').ToList(), searchTerms[i]));
-        //        }
-        //    }
-
-        //    return results;
-        //}
-
-        //public static SearchResult Search(IEnumerable<string> pagePayload, string searchTerm)
-        //{
-        //    int matches = 0;
-        //    foreach (string line in pagePayload) {
-        //        if (line.Contains(searchTerm))
-        //            matches++;
-        //    }
-
-        //    return new SearchResult(null, null, matches, searchTerm);
-        //}
-
-        //public List<SearchResult> Search(string searchTerm, List<string> pages)
-        //{
-        //    Parallel.ForEach(pages, (link) => {
-
-        //    });
-        //}
-
-        //        public static IEnumerable<IEnumerable<string>> GetPages(IEnumerable<string> pages)
-        //        {
-        //#if prueba
-        //            foreach (string page in pages)
-        //                yield return HttpDownloader.DownloadPage(page);
-        //#endif
-        //            var tmp = new List<string>();
-        //            foreach (string page in pages)
-        //                tmp.Add(HttpDownloader.Download(page));
-
-        //            return tmp;
-        //        }
     }
 }

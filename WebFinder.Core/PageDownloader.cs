@@ -13,17 +13,18 @@ namespace WebFinder
             return page.Split('\n').ToList();
         }
 
-        public static async Task<IEnumerable<IEnumerable<string>>> DownloadPagesAsync(IEnumerable<string> urls)
+        public static async Task<IEnumerable<HtmlPage>> DownloadPagesAsync(IEnumerable<string> urls)
         {
-            var pages = new List<IEnumerable<string>>();
+            var pages = new List<HtmlPage>();
 
             //Parallel.ForEach(urls, async url => {
             //    var tmp = await DownloadPageAsync(url);
             //    pages.Add(tmp);
             //});
+
             foreach (string url in urls) {
                 var tmp = await DownloadPageAsync(url);
-                pages.Add(tmp);
+                pages.Add(new HtmlPage(url, tmp));
             }
 
             return pages;

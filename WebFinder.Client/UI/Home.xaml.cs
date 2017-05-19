@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static WebFinder.EventLogger;
 using System.Windows.Media.Animation;
-using System.Threading;
-using System.Timers;
 using System.Windows.Threading;
-using static System.Console;
-using System.Diagnostics;
 using WebFinder.UI.Controls;
+using static WebFinder.EventLogger;
 
 namespace WebFinder.UI
 {
@@ -31,9 +21,17 @@ namespace WebFinder.UI
         private const int HINT_DOWNLOADING_PAGES = 0x2;
         private const int HINT_HIDE = 0x3;
 
+        private IEnumerable<HtmlPage> pages = null;
+        private List<string> lastSearchTerms = null;
+        private List<SearchResult> lastSearchResults = null;
+        //private List<double> lastSearchElapsedTime = null;
+        private double lastSearchElapsedTime = 0;
+
         public Home()
         {
             InitializeComponent();
+
+            GetPagesOnStart();
 
             SetupHint(HINT_DEFAULT);
 
@@ -57,9 +55,19 @@ namespace WebFinder.UI
             searchBox.Focus();
 
             messageBar.Height = 0;
+
+            containerSearchOverview.Visibility = Visibility.Collapsed;
+            containerTargetSearch.Visibility = Visibility.Collapsed;
         }
 
-        private async void PrepareSearch(IEnumerable<string> searchTerms)
+        private async void GetPagesOnStart()
+        {
+            var tmp = await PageDownloader.DownloadPagesAsync(PageLibraryManager.GetLinks());
+            pages = tmp;
+            Log("Se ha completado la descarga inicial de páginas.");
+        }
+
+        private void PrepareSearch(IEnumerable<string> searchTerms)
         {
             SetupHint(HINT_DOWNLOADING_PAGES);
 
@@ -67,43 +75,47 @@ namespace WebFinder.UI
 
             var sw = Stopwatch.StartNew();
 
-            var pages = await PageDownloader.DownloadPagesAsync(PageLibraryManager.GetLinks());
-
             Log($"Obtención de contenido finalizada en {sw.Elapsed.TotalMilliseconds} ms.");
             sw.Stop();
 
-            //foreach (var page in pages) {
-            //    foreach (string line in page) {
-            //        if (line.Contains("<title>")) {
-            //            WriteLine(line);
-            //            break;
-            //        }
-            //    }
-            //}
-
             SetupHint(HINT_HIDE);
-
-
 
             sw = Stopwatch.StartNew();
 
-            var results = SearchEngine.RunSearch(pages, searchTerms, true).ToList();
+            var results = SearchEngine.RunSearch(pages, searchTerms, SettingsManager.GetSetting(SettingsManager.STT_SEARCH_PARALLEL));
 
-            Log($"Búsqueda completada en {sw.Elapsed.TotalMilliseconds} ms.");
+            sw.Stop();
+            lastSearchElapsedTime = sw.Elapsed.TotalMilliseconds;
 
-            LoadResults(results);
+            Log($"Búsqueda completada en {lastSearchElapsedTime} ms.");
 
-            //foreach(var result in results) {
-            //    WriteLine(result.ToString());
-            //}
+            lastSearchTerms = (List<string>)searchTerms;
+            lastSearchResults = results;
+
+            LoadSearchedTerms();
+
+            if (lastSearchTerms.Count > 1)
+                containerTargetSearch.Visibility = Visibility.Visible;
+            containerSearchOverview.Visibility = Visibility.Visible;
+
+            LoadResults(lastSearchTerms[0]);
+        }
+
+        private void LoadSearchedTerms()
+        {
+            cbxTargetTerm.Items.Clear();
+            foreach (var item in lastSearchTerms) {
+                cbxTargetTerm.Items.Add(item);
+            }
+
+            cbxTargetTerm.SelectedIndex = 0;
         }
 
         private void btnManageLibrary_Click(object sender, RoutedEventArgs e)
         {
-            var ml = new ManageLibrary() {
+            new Options() {
                 Owner = this
-            };
-            ml.ShowDialog();
+            }.ShowDialog();
         }
 
         private void SetupHint(int mode)
@@ -129,33 +141,32 @@ namespace WebFinder.UI
 
             lblHintsIcon.Data = (Geometry)FindResource(icon);
             lblHintsText.Text = (string)FindResource(text);
-
-            /*
-            if (mode == HINT_DOWNLOADING_PAGES) {
-                var sb = (Storyboard)FindResource("anim.hint.rotateIcon");
-                sb.Completed += (sender, e) => {
-                    BeginStoryboard(sb);
-                };
-                BeginStoryboard(sb);
-            } else {
-                ((Storyboard)FindResource("anim.hint.rotateIcon")).Stop();
-                lblHintsIcon.RenderTransform = new RotateTransform(0);
-            }
-            */
-
         }
 
-        private void LoadResults(List<SearchResult> results)
+        private void LoadResults(string targetTerm)
         {
-            foreach (var result in results) {
-                var item = new SearchResultItem() {
-                    PageTitle = result.PageTitle,
-                    PageUrl = result.URL,
-                    MatchesFound = result.Matches
-                };
-                stkResults.Children.Add(item);
+            stkResults.Children.Clear();
+
+            lblSearchOverview.Content = ((string)FindResource("lang.searchResultOverview")).Replace("{0}",
+                            (from n in lastSearchResults where n.SearchTerm.Equals(targetTerm) select n).Count().ToString())
+                            .Replace("{1}", targetTerm).Replace("{2}", lastSearchElapsedTime.ToString());
+            
+            foreach (var result in lastSearchResults) {
+                if (result.Matches > 0 && result.SearchTerm.Equals(targetTerm)) {
+                    var item = new SearchResultItem() {
+                        PageTitle = result.PageTitle,
+                        PageUrl = result.URL,
+                        MatchesFound = result.Matches
+                    };
+                    stkResults.Children.Add(item);
+                }
             }
         }
 
+        private void cbxTargetTerm_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbxTargetTerm.SelectedIndex > -1)
+                LoadResults(lastSearchTerms[cbxTargetTerm.SelectedIndex]);
+        }
     }
 }

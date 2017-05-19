@@ -7,4 +7,6 @@
     <system:String x:Key="lang.home.withoutSearchTerms">Debe introducir al menos un término de búsqueda</system:String>
     
     <system:String x:Key="lang.searchResultItem.matches">{0} coincidencias</system:String>
+
+    <system:String x:Key="lang.searchResultOverview">{0} páginas con coincidencias encontradas para '{1}' ({2} ms)...</system:String>
 </ResourceDictionary>
