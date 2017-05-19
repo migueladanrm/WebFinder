@@ -127,33 +127,16 @@
             </Grid>
         </Grid>
         
-        <!--<Grid x:Name="screenSecondary">
+        <Grid x:Name="screenSecondary">
             <Grid.Background>
-                <SolidColorBrush Color="Black" Opacity="0.3"/>
+                <SolidColorBrush Color="Black" Opacity="0.75"/>
             </Grid.Background>
 
-            <Border Height="200" Width="400" Background="WhiteSmoke" CornerRadius="5" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5">
-                <Border.Effect>
-                    <DropShadowEffect Opacity="0.5" Direction="270" ShadowDepth="3"/>
-                </Border.Effect>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Border MouseLeftButtonDown="HideSettingsDialog" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,5,0" >
-                        <Path Data="{StaticResource vector.close}" Fill="Gray" Stretch="Uniform"/>
-                    </Border>
-                    
-                    <Label Content="Opciones" HorizontalAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="15" Foreground="Gray"/>
-
-                    <StackPanel Grid.Row="1" Margin="5">
-                        <CheckBox x:Name="cbxUseParallelism" Checked="cbxUseParallelism_CheckedChanged" Content="Utilizar búsqueda paralela."/>
-                    </StackPanel>
-                    
-                </Grid>
-            </Border>
-        </Grid>-->
+            <Label Content="Obteniendo páginas..." HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontFamily="Segoe UI Semilight" FontSize="28">
+                <Label.Effect>
+                    <DropShadowEffect Opacity="0.5" ShadowDepth="3"/>
+                </Label.Effect>
+            </Label>
+        </Grid>
     </Grid>
 </Window>

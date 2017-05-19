@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -24,7 +23,6 @@ namespace WebFinder.UI
         private IEnumerable<HtmlPage> pages = null;
         private List<string> lastSearchTerms = null;
         private List<SearchResult> lastSearchResults = null;
-        //private List<double> lastSearchElapsedTime = null;
         private double lastSearchElapsedTime = 0;
 
         public Home()
@@ -65,6 +63,7 @@ namespace WebFinder.UI
             var tmp = await PageDownloader.DownloadPagesAsync(PageLibraryManager.GetLinks());
             pages = tmp;
             Log("Se ha completado la descarga inicial de páginas.");
+            screenSecondary.Visibility = Visibility.Collapsed;
         }
 
         private void PrepareSearch(IEnumerable<string> searchTerms)
@@ -146,10 +145,6 @@ namespace WebFinder.UI
         private void LoadResults(string targetTerm)
         {
             stkResults.Children.Clear();
-
-            lblSearchOverview.Content = ((string)FindResource("lang.searchResultOverview")).Replace("{0}",
-                            (from n in lastSearchResults where n.SearchTerm.Equals(targetTerm) select n).Count().ToString())
-                            .Replace("{1}", targetTerm).Replace("{2}", lastSearchElapsedTime.ToString());
             
             foreach (var result in lastSearchResults) {
                 if (result.Matches > 0 && result.SearchTerm.Equals(targetTerm)) {
@@ -161,6 +156,8 @@ namespace WebFinder.UI
                     stkResults.Children.Add(item);
                 }
             }
+
+            lblSearchOverview.Content = ((string)FindResource("lang.searchResultOverview")).Replace("{0}", stkResults.Children.Count.ToString()).Replace("{1}", targetTerm).Replace("{2}", lastSearchElapsedTime.ToString());
         }
 
         private void cbxTargetTerm_SelectionChanged(object sender, SelectionChangedEventArgs e)
